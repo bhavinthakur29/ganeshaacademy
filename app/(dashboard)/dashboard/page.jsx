@@ -7,6 +7,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { SkeletonCard } from "@/components/ui/SkeletonCard";
 import { supabase } from "@/lib/supabase";
 import { useAuth } from "@/hooks/useAuth";
+import { useBranches } from "@/hooks";
 import { getPendingApprovalCount, getPendingOrdersCount } from "@/lib/api";
 import { cn } from "@/lib/utils";
 
@@ -64,6 +65,9 @@ async function getStats({ isInstructor, branchId }) {
 export default function DashboardPage() {
   const [stats, setStats] = useState(null);
   const { branchId, isInstructor } = useAuth();
+  const { data: branches } = useBranches();
+  const branch = branches?.find((b) => b.id === branchId || String(b.id) === String(branchId));
+  const branchName = branch?.name ?? branch?.branch_name;
 
   useEffect(() => {
     getStats({ isInstructor, branchId }).then(setStats).catch(() => {
@@ -83,7 +87,7 @@ export default function DashboardPage() {
   const cards = stats ? (
     isInstructor
       ? [
-        { label: "Students (Branch)", value: stats.branchStudents, icon: Users, href: "/students" },
+        { label: "Students", value: stats.branchStudents, icon: Users, href: "/students" },
         { label: "Attendance", value: stats.todayAttendance, icon: ClipboardList, href: "/attendance" },
         { label: "Pending Approvals", value: stats.pendingApprovals, icon: Clock, href: "/attendance" },
         { label: "Pending Orders", value: stats.pendingOrders, icon: ShoppingCart, href: "/orders" },
@@ -118,10 +122,10 @@ export default function DashboardPage() {
       {/* Hero section - Dilatron style */}
       <section className="space-y-3">
         <p className="text-sm font-medium text-emerald-600 dark:text-emerald-400 uppercase tracking-wider">
-          {isInstructor ? "Branch Overview" : "ganesha academy of martial arts"}
+          {isInstructor ? ("A unit of GAMA") : "ganesha academy of martial arts"}
         </p>
         <h1 className="text-3xl sm:text-4xl font-bold tracking-tight text-foreground">
-          {isInstructor ? "Your branch at a glance" : "Your academy at a glance"}
+          {isInstructor ? (branchName ? branchName : "Your branch at a glance") : "Your academy at a glance"}
         </h1>
         <p className="text-muted-foreground max-w-2xl">
           {isInstructor

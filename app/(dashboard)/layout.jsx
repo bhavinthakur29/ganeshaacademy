@@ -45,7 +45,7 @@ export default function DashboardLayout({ children }) {
       let c = await getUnreadCount(user.id);
       if (user.user_metadata?.role === "admin") c += await getPendingApprovalCount();
       setUnreadCount(c);
-    } catch {}
+    } catch { }
   }, [user]);
 
   const handleRealtimeNotification = useCallback((payload) => {
@@ -103,42 +103,42 @@ export default function DashboardLayout({ children }) {
       <div className="absolute -top-40 -right-40 w-80 h-80 rounded-full bg-emerald-500/5 dark:bg-emerald-500/10 blur-3xl" />
       <div className="absolute -bottom-40 -left-40 w-96 h-96 rounded-full bg-emerald-400/5 dark:bg-emerald-600/10 blur-3xl" />
       <div className="relative z-10 flex min-h-screen flex-col">
-      <NotificationRealtimeHandler
-        userId={user?.id}
-        onNotification={handleRealtimeNotification}
-        onRealtimeFailed={refreshUnreadCount}
-      />
-      <DashboardPrefetcher />
-      <Sidebar
-        collapsed={sidebarCollapsed}
-        onCollapsed={setSidebarCollapsed}
-        open={sidebarOpen}
-        onOpen={setSidebarOpen}
-      />
-      <div
-        className={cn(
-          "flex flex-col min-h-screen w-full min-w-0 transition-all duration-300",
-          "pl-0",
-          sidebarCollapsed ? "lg:pl-14" : "lg:pl-64"
-        )}
-      >
-        <Navbar
-          onMenuClick={() => setSidebarOpen(true)}
-          theme={theme}
-          onThemeToggle={toggle}
-          unreadCount={unreadCount}
-          onReadUpdate={user ? async () => {
-            try {
-              let c = await getUnreadCount(user.id);
-              if (user.user_metadata?.role === "admin") c += await getPendingApprovalCount();
-              setUnreadCount(c);
-            } catch {}
-          } : undefined}
+        <NotificationRealtimeHandler
+          userId={user?.id}
+          onNotification={handleRealtimeNotification}
+          onRealtimeFailed={refreshUnreadCount}
         />
-        <main className="flex-1 overflow-auto overflow-x-auto p-4 md:p-6 min-h-0 w-full min-w-0">
-          <RoleGuard>{children}</RoleGuard>
-        </main>
-      </div>
+        <DashboardPrefetcher />
+        <Sidebar
+          collapsed={sidebarCollapsed}
+          onCollapsed={setSidebarCollapsed}
+          open={sidebarOpen}
+          onOpen={setSidebarOpen}
+        />
+        <div
+          className={cn(
+            "flex flex-col min-h-screen w-full min-w-0 transition-all duration-300",
+            "pl-0",
+            sidebarCollapsed ? "lg:pl-14" : "lg:pl-64"
+          )}
+        >
+          <Navbar
+            onMenuClick={() => setSidebarOpen(true)}
+            theme={theme}
+            onThemeToggle={toggle}
+            unreadCount={unreadCount}
+            onReadUpdate={user ? async () => {
+              try {
+                let c = await getUnreadCount(user.id);
+                if (user.user_metadata?.role === "admin") c += await getPendingApprovalCount();
+                setUnreadCount(c);
+              } catch { }
+            } : undefined}
+          />
+          <main className="flex-1 overflow-auto overflow-x-auto p-4 md:p-6 min-h-0 w-full min-w-0">
+            <RoleGuard>{children}</RoleGuard>
+          </main>
+        </div>
       </div>
     </div>
   );

@@ -150,7 +150,7 @@ export default function SignupPage() {
                   type="button"
                   variant="ghost"
                   size="icon"
-                  className="absolute right-1 top-0 flex h-full w-8 items-center justify-center text-emerald-600 dark:text-emerald-400 hover:text-emerald-700 dark:hover:text-slate-200"
+                  className="absolute right-1 top-0 flex h-full w-8 items-center justify-center text-emerald-600 dark:text-emerald-400 hover:bg-transparent hover:text-emerald-600 dark:hover:text-emerald-400"
                   onClick={() => setShowPassword(!showPassword)}
                   aria-label={showPassword ? "Hide password" : "Show password"}
                   tabIndex={-1}

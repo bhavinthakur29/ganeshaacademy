@@ -71,9 +71,9 @@ export default function ForgotPasswordPage() {
             </CardHeader>
             <CardFooter className="pt-0">
               <Link href="/login" className="w-full">
-              <Button
-                className="w-full h-11 font-medium bg-emerald-600 hover:bg-emerald-700 text-white shadow-lg shadow-emerald-500/25 border-0"
-              >
+                <Button
+                  className="w-full h-11 font-medium bg-emerald-600 hover:bg-emerald-700 text-white shadow-lg shadow-emerald-500/25 border-0"
+                >
                   <ArrowLeft className="mr-2 h-4 w-4" />
                   Back to sign in
                 </Button>
